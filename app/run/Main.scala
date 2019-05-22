@@ -19,7 +19,6 @@ object Main {
       service.fetchVideoUrl(inputUrl) match {
         case Right(videoUrl) =>
           println("Attempting to download video...")
-          println(videoUrl)
           connector.downloadVideo(videoUrl) match {
             case Right(path) =>
               println(s"The video has been downloaded successfully.\nResult: $path")
