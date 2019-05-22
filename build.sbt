@@ -2,7 +2,10 @@ import sbt.Tests.{Group, SubProcess}
 
 val appName: String = "youtube-downloader"
 
-val compile = Seq()
+val compile = Seq(
+  "com.google.inject" % "guice" % "4.2.2",
+  "com.softwaremill.sttp" %% "core" % "1.5.8"
+)
 
 def test(scope: String = "test, it"): Seq[ModuleID] = Seq(
   "org.scalatest" %% "scalatest" % "3.0.5" % scope,
@@ -34,6 +37,9 @@ lazy val project: Project = Project(appName, file("."))
   .settings(coverageSettings: _*)
   .settings(
     scalaVersion := "2.12.8",
+    scalaSource in Compile := baseDirectory.value / "app",
+    scalaSource in Test := baseDirectory.value / "test",
+    mainClass in run := Some((baseDirectory.value / "app.run.Main").toString),
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
     evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false)
